@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ScrollShapeUI</string>
+    <string name="transition_movie_img">transition_movie_img</string>
+
+    <array name="books">
+        <item>《三重门》</item>
+        <item>《零下一度》 </item>
+        <item>《像少年啦飞驰》</item>
+        <item>《毒》</item>
+        <item>《通稿2003》</item>
+        <item>《韩寒五年》</item>
+        <item>《就这么漂来漂去》</item>
+        <item>《一座城池》</item>
+        <item>《寒-18禁》</item>
+        <item>《毒2》</item>
+        <item>《光荣日》</item>
+        <item>《杂的文》</item>
+        <item>《他的国》</item>
+        <item>《草》</item>
+        <item>《可爱的洪水猛兽》</item>
+        <item>《1988：我想和这个世界谈谈》</item>
+        <item>《独唱团》</item>
+    </array>
+</resources>

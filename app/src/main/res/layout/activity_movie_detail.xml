@@ -1,0 +1,103 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.jingbin.scrollshapeui.view.MyNestedScrollView
+            android:id="@+id/nsv_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPageBg"
+            android:scrollbarSize="4dp"
+            android:scrollbarThumbVertical="@color/tabBackground"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_Header_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/include"
+                        layout="@layout/header_slide_shape" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <TextView
+                        android:id="@+id/tv_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="10dp"
+                        android:text="作品主题：
+                        \n\n
+《1988》在题旨上野心宏大，在结构上明晰、完整，安排了现实之旅与成长历程一明一暗两条线索，并加强了两条线索之间的相互参照、对比，从而强化了整个作品的思想涵盖力与讽喻性。
+ \n\n
+在《1988》中，韩寒想要表达、而更多的人避讳的一个主题，被他像打扑克般从容地顺手提溜出来，变幻着种种戏剧的效果：暴力执法、中小学教育、嫖客、严打、虚假广告、碰瓷捞钱、粗俗文艺、报纸审查、演艺圈潜规则、城管钓鱼、交通安全、地沟油……而这种从容正表现出了这些错误在“中国逻辑”下的正确。[6]
+ \n\n
+正如小说副题“我想和这个世界谈谈”所表现的，其中暗含了韩寒的态度：他需要以对话的方式，去解读这个世界，以及这个世界里人性之善恶、美丑、正邪。他想和这个世界谈谈，以一种“在路上”的方式，“试图用能给世界一些新意的眼光来看世界，试图寻找令人信服的价值”。[7]
+ \n\n
+在小说中，韩寒不仅在描绘人的现实遭遇，同时，他更是在探讨人的精神处境，这时就有了他自己的影子。他虽然没有直接参与进来，但是，他仍然在公人主陆子野身上渗透了自己的世界观。他怎样以一种清醒的方式看待世界，或者去反抗，或者去包容，这只是人生在困境时刻的态度。像陆子野对待娜娜，他一路上带着这个妓女，几次曾有摆脱她的想法，但善心召唤他最终没有行抛弃之举，而是以一种同情理解的姿态，容纳了这个萍水相逢但一路与他相互支撑、相互倾诉的朋友。娜娜最终选择离开陆子野，她没有把自己当做一种负累甩给他。这种感伤，让陆子野也定有心痛之感。
+ \n\n
+在追忆叙事里，不无伤感，但是，每个人都从中获得了一种坚韧，只有活下去，才能看到这个世界的希望，否则，一切都只不过是自欺欺人。精神的持守，才是韩寒最后需要定格的真相。生活本身就是残酷的，如果我们将这种残酷当做一种无法化解的苦难，悲观可能会接踵而至。韩寒在小说中，却一一化解了那些斗争、困惑、纠结与矛盾，虽然有些还是未能彻底处理，但是，他至少为我们出示了他追求自由的姿态，让我们看清了这个世界是需要如何来与之周旋，与之对话的。这或许才是其写作的价值和力量感所在。"
+                        android:textColor="#666"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/xrv_cast"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </com.example.jingbin.scrollshapeui.view.MyNestedScrollView>
+
+
+        <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/rl_title_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/iv_title_head_bg"
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:visibility="gone"
+                android:scaleType="fitXY" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/title_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorTransparent"
+                app:contentInsetStart="0.0dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ToolbarStyle">
+
+            </android.support.v7.widget.Toolbar>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</layout>
