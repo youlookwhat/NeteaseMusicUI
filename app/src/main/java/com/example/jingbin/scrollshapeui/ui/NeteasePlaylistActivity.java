@@ -176,7 +176,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      * 加载titlebar背景
      */
     private void setImgHeaderBg() {
-        // 高斯模糊背景
+        // 高斯模糊背景，加载后将背景设为透明
         Glide.with(this).load(NeteasePlaylistActivity.IMAGE_URL_MEDIUM)
                 .error(R.drawable.stackblur_default)
                 .bitmapTransform(new BlurTransformation(this, 14, 3)).listener(new RequestListener<String, GlideDrawable>() {
@@ -220,8 +220,8 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
             scrolledY = 0;
         }
         float alpha = Math.abs(scrolledY) * 1.0f / (slidingDistance);
-//        DebugUtil.error("----alpha:  " + alpha);
         Drawable drawable = binding.ivTitleHeadBg.getDrawable();
+//        DebugUtil.error("----alpha:  " + alpha);
 
         if (drawable != null) {
             if (scrolledY <= slidingDistance) {
