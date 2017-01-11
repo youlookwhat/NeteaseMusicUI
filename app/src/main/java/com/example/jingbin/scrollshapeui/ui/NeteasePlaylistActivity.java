@@ -78,7 +78,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                 .override((int) CommonUtils.getDimens(R.dimen.movie_detail_width), (int) CommonUtils.getDimens(R.dimen.movie_detail_height))
                 .into(binding.include.ivOnePhoto);
 
-        // "14":模糊度；"3":图片缩放4倍后再进行模糊
+        // "14":模糊度；"3":图片缩放3倍后再进行模糊
         Glide.with(this)
                 .load(IMAGE_URL_MEDIUM)
                 .error(R.drawable.stackblur_default)
@@ -93,7 +93,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      */
     private void setText() {
         binding.tvTxt.setVisibility(View.VISIBLE);
-        binding.xrvCast.setVisibility(View.GONE);
+        binding.xrvList.setVisibility(View.GONE);
     }
 
     /**
@@ -101,16 +101,16 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      */
     private void setAdapter() {
         binding.tvTxt.setVisibility(View.GONE);
-        binding.xrvCast.setVisibility(View.VISIBLE);
+        binding.xrvList.setVisibility(View.VISIBLE);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.xrvCast.setLayoutManager(mLayoutManager);
+        binding.xrvList.setLayoutManager(mLayoutManager);
         // 需加，不然滑动不流畅
-        binding.xrvCast.setNestedScrollingEnabled(false);
-        binding.xrvCast.setHasFixedSize(false);
+        binding.xrvList.setNestedScrollingEnabled(false);
+        binding.xrvList.setHasFixedSize(false);
         final ListAdapter adapter = new ListAdapter(this);
         adapter.notifyDataSetChanged();
-        binding.xrvCast.setAdapter(adapter);
+        binding.xrvList.setAdapter(adapter);
     }
 
     /**
@@ -238,18 +238,19 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        binding.xrvCast.setFocusable(false);
+        binding.xrvList.setFocusable(false);
     }
 
     /**
-     * @param context   activity
-     * @param imageView imageView
+     * @param context        activity
+     * @param imageView      imageView
+     * @param isRecyclerView 是否为列表
      */
     public static void start(Activity context, ImageView imageView, boolean isRecyclerView) {
         Intent intent = new Intent(context, NeteasePlaylistActivity.class);
         intent.putExtra(PARAM, isRecyclerView);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                imageView, CommonUtils.getString(R.string.transition_movie_img));//与xml文件对应
+                imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityCompat.startActivity(context, intent, options.toBundle());
     }
 }

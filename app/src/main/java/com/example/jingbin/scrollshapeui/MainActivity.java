@@ -11,7 +11,7 @@ import com.example.jingbin.scrollshapeui.ui.NeteasePlaylistActivity;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
 
 /**
- * Link to:
+ * Link to: https://github.com/youlookwhat/ScrollShapeUI
  * Contact me: http://www.jianshu.com/u/e43c6e979831
  */
 public class MainActivity extends AppCompatActivity {
