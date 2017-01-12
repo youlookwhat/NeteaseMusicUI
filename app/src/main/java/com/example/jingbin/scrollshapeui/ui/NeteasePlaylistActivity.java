@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.ArcMotion;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +29,7 @@ import com.example.jingbin.scrollshapeui.R;
 import com.example.jingbin.scrollshapeui.adapter.ListAdapter;
 import com.example.jingbin.scrollshapeui.databinding.ActivityMovieDetailBinding;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
+import com.example.jingbin.scrollshapeui.utils.CustomChangeBounds;
 import com.example.jingbin.scrollshapeui.utils.StatusBarUtil;
 import com.example.jingbin.scrollshapeui.view.MyNestedScrollView;
 
@@ -57,6 +63,8 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
             isRecyclerView = getIntent().getBooleanExtra(PARAM, true);
         }
 
+        setMotion();
+
         setTitleBar();
         setPicture();
         initSlideShapeTheme();
@@ -66,6 +74,31 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
             setAdapter();
         } else {// 显示一般文本
             setText();
+        }
+    }
+
+    /**
+     * 设置自定义 Shared Element切换动画
+     */
+    private void setMotion() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //定义ArcMotion
+            ArcMotion arcMotion = new ArcMotion();
+            arcMotion.setMinimumHorizontalAngle(50f);
+            arcMotion.setMinimumVerticalAngle(50f);
+            //插值器，控制速度
+            Interpolator interpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
+
+            //实例化自定义的ChangeBounds
+            CustomChangeBounds changeBounds = new CustomChangeBounds();
+
+            changeBounds.setPathMotion(arcMotion);
+            changeBounds.setInterpolator(interpolator);
+            changeBounds.addTarget(binding.include.ivOnePhoto);
+
+            //将切换动画应用到当前的Activity的进入和返回
+            getWindow().setSharedElementEnterTransition(changeBounds);
+            getWindow().setSharedElementReturnTransition(changeBounds);
         }
     }
 
@@ -178,6 +211,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     private void setImgHeaderBg() {
         // 高斯模糊背景，加载后将背景设为透明
         Glide.with(this).load(NeteasePlaylistActivity.IMAGE_URL_MEDIUM)
+//                .placeholder(R.drawable.stackblur_default)
                 .error(R.drawable.stackblur_default)
                 .bitmapTransform(new BlurTransformation(this, 14, 3)).listener(new RequestListener<String, GlideDrawable>() {
             @Override
@@ -209,7 +243,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     }
 
     /**
-     * 根据页面滑动距离改变Header方法
+     * 根据页面滑动距离改变Header透明度方法
      */
     private void scrollChangeHeader(int scrolledY) {
 
@@ -246,9 +280,12 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      * @param imageView      imageView
      * @param isRecyclerView 是否为列表
      */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void start(Activity context, ImageView imageView, boolean isRecyclerView) {
         Intent intent = new Intent(context, NeteasePlaylistActivity.class);
         intent.putExtra(PARAM, isRecyclerView);
+//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+//                imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                 imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityCompat.startActivity(context, intent, options.toBundle());

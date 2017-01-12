@@ -1,7 +1,9 @@
 package com.example.jingbin.scrollshapeui;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        setTitle("仿网易云音乐歌单详情页");
         Glide.with(this)
                 .load(NeteasePlaylistActivity.IMAGE_URL_LARGE)
                 .crossFade(500)
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         // RecyclerView列表显示
         binding.tvRecyclerview.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         });
         // 一般文本显示
         binding.tvTxtShow.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
                 NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
