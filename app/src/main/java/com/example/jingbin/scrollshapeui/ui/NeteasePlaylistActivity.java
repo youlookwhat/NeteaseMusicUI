@@ -64,7 +64,6 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         }
 
         setMotion();
-
         setTitleBar();
         setPicture();
         initSlideShapeTheme();
@@ -284,8 +283,6 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     public static void start(Activity context, ImageView imageView, boolean isRecyclerView) {
         Intent intent = new Intent(context, NeteasePlaylistActivity.class);
         intent.putExtra(PARAM, isRecyclerView);
-//        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-//                imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                 imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityCompat.startActivity(context, intent, options.toBundle());
