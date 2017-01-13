@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.transition.ArcMotion;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -86,7 +85,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
             arcMotion.setMinimumVerticalAngle(50f);
             //插值器，控制速度
             Interpolator interpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
-            
+
             //实例化自定义的ChangeBounds
             CustomChangeBounds changeBounds = new CustomChangeBounds();
             changeBounds.setPathMotion(arcMotion);
@@ -170,14 +169,12 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     private void initSlideShapeTheme() {
         setImgHeaderBg();
 
-        String TAG = "---NeteasePlaylist:";
-        // toolbar 的高
+        // toolbar的高度
         int toolbarHeight = binding.titleToolBar.getLayoutParams().height;
-        Log.i(TAG, "toolbar height:" + toolbarHeight);
-        final int headerBgHeight = toolbarHeight + getStatusBarHeight(this);
-        Log.i(TAG, "headerBgHeight:" + headerBgHeight);
+        // toolbar+状态栏的高度
+        final int headerBgHeight = toolbarHeight + StatusBarUtil.getStatusBarHeight(this);
 
-        // 使背景图向上移动到图片的最底端，保留（titlebar+statusbar）的高度
+        // 使背景图向上移动到图片的最底端，保留toolbar+状态栏的高度
         binding.ivTitleHeadBg.setVisibility(View.VISIBLE);
         ViewGroup.LayoutParams params = binding.ivTitleHeadBg.getLayoutParams();
         ViewGroup.MarginLayoutParams ivTitleHeadBgParams = (ViewGroup.MarginLayoutParams) binding.ivTitleHeadBg.getLayoutParams();
@@ -202,14 +199,14 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
 
 
     /**
-     * 加载titlebar背景
+     * 加载titlebar背景,加载后将背景设为透明
      */
     private void setImgHeaderBg() {
-        // 高斯模糊背景，加载后将背景设为透明
         Glide.with(this).load(NeteasePlaylistActivity.IMAGE_URL_MEDIUM)
 //                .placeholder(R.drawable.stackblur_default)
                 .error(R.drawable.stackblur_default)
-                .bitmapTransform(new BlurTransformation(this, 14, 3)).listener(new RequestListener<String, GlideDrawable>() {
+                .bitmapTransform(new BlurTransformation(this, 14, 3))// 设置高斯模糊
+                .listener(new RequestListener<String, GlideDrawable>() {//监听加载状态
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 return false;
@@ -226,7 +223,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     }
 
     private void initScrollViewListener() {
-        // 为了兼容23以下
+        // 为了兼容api23以下
         binding.nsvScrollview.setOnMyScrollChangeListener(new MyNestedScrollView.ScrollInterface() {
             @Override
             public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
