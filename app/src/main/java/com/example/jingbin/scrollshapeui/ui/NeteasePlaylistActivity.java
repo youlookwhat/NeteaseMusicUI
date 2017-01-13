@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
@@ -87,14 +86,12 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
             arcMotion.setMinimumVerticalAngle(50f);
             //插值器，控制速度
             Interpolator interpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.fast_out_slow_in);
-
+            
             //实例化自定义的ChangeBounds
             CustomChangeBounds changeBounds = new CustomChangeBounds();
-
             changeBounds.setPathMotion(arcMotion);
             changeBounds.setInterpolator(interpolator);
             changeBounds.addTarget(binding.include.ivOnePhoto);
-
             //将切换动画应用到当前的Activity的进入和返回
             getWindow().setSharedElementEnterTransition(changeBounds);
             getWindow().setSharedElementReturnTransition(changeBounds);
@@ -279,7 +276,6 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      * @param imageView      imageView
      * @param isRecyclerView 是否为列表
      */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static void start(Activity context, ImageView imageView, boolean isRecyclerView) {
         Intent intent = new Intent(context, NeteasePlaylistActivity.class);
         intent.putExtra(PARAM, isRecyclerView);
