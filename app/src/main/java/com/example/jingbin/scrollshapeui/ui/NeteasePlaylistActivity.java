@@ -38,6 +38,11 @@ import static com.example.jingbin.scrollshapeui.utils.StatusBarUtil.getStatusBar
 /**
  * Created by jingbin on 2017/1/9.
  * 高仿网易云音乐歌单详情页
+ * 实现思路：
+ * 1、Activity设置自定义Shared Element切换动画
+ * 2、透明状态栏（透明Toolbar,使背景图上移）
+ * 3、Toolbar底部增加和背景一样的高斯模糊图，并上移图片（为了使背景图的底部作为Toolbar的背景）
+ * 4、上下滑动，通过NestedScrollView拿到移动的高度，同时调整Toolbar的背景图透明度
  */
 
 public class NeteasePlaylistActivity extends AppCompatActivity {
@@ -203,19 +208,19 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                 .error(R.drawable.stackblur_default)
                 .bitmapTransform(new BlurTransformation(this, 14, 3))// 设置高斯模糊
                 .listener(new RequestListener<String, GlideDrawable>() {//监听加载状态
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
-            }
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        return false;
+                    }
 
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                binding.titleToolBar.setBackgroundColor(Color.TRANSPARENT);
-                binding.ivTitleHeadBg.setImageAlpha(0);
-                binding.ivTitleHeadBg.setVisibility(View.VISIBLE);
-                return false;
-            }
-        }).into(binding.ivTitleHeadBg);
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        binding.titleToolBar.setBackgroundColor(Color.TRANSPARENT);
+                        binding.ivTitleHeadBg.setImageAlpha(0);
+                        binding.ivTitleHeadBg.setVisibility(View.VISIBLE);
+                        return false;
+                    }
+                }).into(binding.ivTitleHeadBg);
     }
 
     private void initScrollViewListener() {
