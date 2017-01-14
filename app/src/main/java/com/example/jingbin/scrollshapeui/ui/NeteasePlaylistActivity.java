@@ -181,13 +181,9 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         int marginTop = params.height - headerBgHeight;
         ivTitleHeadBgParams.setMargins(0, -marginTop, 0, 0);
         binding.ivTitleHeadBg.setImageAlpha(0);
-        StatusBarUtil.setTranslucentImageHeader(this, 0, binding.titleToolBar);
 
-        // 上移背景图片，使空白状态栏消失(这样下方就空了状态栏的高度)
-        if (binding.include.imgItemBg != null) {
-            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) binding.include.imgItemBg.getLayoutParams();
-            layoutParams.setMargins(0, -getStatusBarHeight(this), 0, 0);
-        }
+        // 为头部是View的界面设置状态栏透明
+        StatusBarUtil.setTranslucentImageHeader(this, 0, binding.titleToolBar);
 
         ViewGroup.LayoutParams imgItemBgparams = binding.include.imgItemBg.getLayoutParams();
         // 获得高斯图背景的高度
