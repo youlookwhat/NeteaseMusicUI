@@ -47,9 +47,9 @@ import static com.example.jingbin.scrollshapeui.utils.StatusBarUtil.getStatusBar
 
 public class NeteasePlaylistActivity extends AppCompatActivity {
 
-    public final static String IMAGE_URL_LARGE = "https://img5.doubanio.com/lpic/s4477716.jpg";
-    public final static String IMAGE_URL_SMALL = "https://img5.doubanio.com/spic/s4477716.jpg";
-    public final static String IMAGE_URL_MEDIUM = "https://img5.doubanio.com/mpic/s4477716.jpg";
+    public final static String IMAGE_URL_LARGE = "https://img3.doubanio.com/view/subject/l/public/s4477716.jpg";
+    public final static String IMAGE_URL_MEDIUM = "https://img3.doubanio.com/view/subject/m/public/s4477716.jpg";
+    public final static String IMAGE_URL_SMALL = "https://img3.doubanio.com/view/subject/s/public/s4477716.jpg";
     public final static String PARAM = "isRecyclerView";
     private ActivityMovieDetailBinding binding;
     // 这个是高斯图背景的高度
