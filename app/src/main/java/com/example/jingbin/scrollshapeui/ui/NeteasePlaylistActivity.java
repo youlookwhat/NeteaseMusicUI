@@ -125,6 +125,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
      * 显示文本
      */
     private void setText() {
+        binding.tvTxt.setText(CommonUtils.getString(R.string.string_intr));
         binding.tvTxt.setVisibility(View.VISIBLE);
         binding.xrvList.setVisibility(View.GONE);
     }
