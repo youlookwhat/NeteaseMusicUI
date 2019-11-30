@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
@@ -20,7 +21,9 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.jingbin.scrollshapeui.R;
@@ -116,8 +119,8 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                 .load(IMAGE_URL_MEDIUM)
                 .error(R.drawable.stackblur_default)
                 .placeholder(R.drawable.stackblur_default)
-                .crossFade(500)
-                .bitmapTransform(new BlurTransformation(this, 14, 3))
+                .transition(DrawableTransitionOptions.withCrossFade(500))
+                .transform(new BlurTransformation(40, 8))// 设置高斯模糊
                 .into(binding.include.imgItemBg);
     }
 
@@ -207,15 +210,15 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         Glide.with(this).load(NeteasePlaylistActivity.IMAGE_URL_MEDIUM)
 //                .placeholder(R.drawable.stackblur_default)
                 .error(R.drawable.stackblur_default)
-                .bitmapTransform(new BlurTransformation(this, 14, 3))// 设置高斯模糊
-                .listener(new RequestListener<String, GlideDrawable>() {//监听加载状态
+                .transform(new BlurTransformation(40, 8))// 设置高斯模糊
+                .listener(new RequestListener<Drawable>() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         binding.titleToolBar.setBackgroundColor(Color.TRANSPARENT);
                         binding.ivTitleHeadBg.setImageAlpha(0);
                         binding.ivTitleHeadBg.setVisibility(View.VISIBLE);

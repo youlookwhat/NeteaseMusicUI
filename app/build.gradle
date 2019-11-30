@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.jingbin.scrollshapeui"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,13 +23,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
-    compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    // 高斯模糊和圆角等
+    implementation 'jp.wasabeef:glide-transformations:4.0.1'
+
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation "com.github.youlookwhat:ByRecyclerView:1.0.9-support"
 }

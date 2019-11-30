@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.jingbin.scrollshapeui.databinding.ActivityMainBinding;
 import com.example.jingbin.scrollshapeui.ui.NeteasePlaylistActivity;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("仿网易云音乐歌单详情页");
         Glide.with(this)
                 .load(NeteasePlaylistActivity.IMAGE_URL_LARGE)
-                .crossFade(500)
+                .transition(DrawableTransitionOptions.withCrossFade(500))
                 .override((int) CommonUtils.getDimens(R.dimen.movie_detail_width), (int) CommonUtils.getDimens(R.dimen.movie_detail_height))
                 .into(binding.ivSongList);
 
