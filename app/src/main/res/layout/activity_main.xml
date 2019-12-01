@@ -15,15 +15,15 @@
             android:layout_marginTop="100dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center"
-            android:text="仿网易云音乐歌单详情页"
+            android:text="仿网易云音乐动态详情页"
             android:textColor="#333"
             android:textSize="17sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="120dp"
             android:background="@color/colorPageBg"
             android:gravity="center_vertical"
             android:paddingRight="10dp">
@@ -51,9 +51,9 @@
                 android:id="@+id/iv_song_list"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/colorPageBg"
+                android:layout_alignParentEnd="true"
+                android:background="@color/tabBackground"
                 android:scaleType="fitXY" />
 
         </RelativeLayout>

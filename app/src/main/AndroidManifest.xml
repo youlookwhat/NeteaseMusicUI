@@ -25,7 +25,11 @@
         </activity>
 
         <activity
-            android:name="com.example.jingbin.scrollshapeui.ui.NeteasePlaylistActivity"
+            android:name=".ui.NeteasePlaylistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyScrollPage" />
+        <activity
+            android:name=".ui.NeteaseDynamicDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyScrollPage" />
     </application>

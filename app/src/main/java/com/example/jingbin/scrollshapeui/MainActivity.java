@@ -1,5 +1,6 @@
 package com.example.jingbin.scrollshapeui;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.jingbin.scrollshapeui.databinding.ActivityMainBinding;
+import com.example.jingbin.scrollshapeui.ui.NeteaseDynamicDetailActivity;
 import com.example.jingbin.scrollshapeui.ui.NeteasePlaylistActivity;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
 
@@ -47,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
+            }
+        });
+        binding.tvSongList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NeteaseDynamicDetailActivity.class));
             }
         });
     }
