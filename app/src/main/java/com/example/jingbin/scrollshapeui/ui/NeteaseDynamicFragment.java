@@ -1,6 +1,7 @@
 package com.example.jingbin.scrollshapeui.ui;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +19,8 @@ import com.example.jingbin.scrollshapeui.adapter.DynamicAdapter;
 import com.example.jingbin.scrollshapeui.base.BaseFragment;
 import com.example.jingbin.scrollshapeui.databinding.FragmentNeteaseDynamicBinding;
 import com.example.jingbin.scrollshapeui.databinding.HeaderDynamicBinding;
-import com.example.jingbin.scrollshapeui.impl.OnFragmentScrollInterface;
+import com.example.jingbin.scrollshapeui.impl.OnActivityListener;
+import com.example.jingbin.scrollshapeui.impl.OnFragmentListener;
 import com.example.jingbin.scrollshapeui.utils.DataUtil;
 import com.example.jingbin.scrollshapeui.utils.DensityUtil;
 
@@ -42,6 +44,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
     private int totalDy;
     private float y1;
     private float y2;
+    private LinearLayoutManager layoutManager;
 
     @Override
     public void onAttach(Context context) {
@@ -91,7 +94,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
         headerBinding = DataBindingUtil.inflate(LayoutInflater.from(activity), R.layout.header_dynamic, (ViewGroup) bindingView.recyclerView.getParent(), false);
         recyclerView = getView(R.id.recyclerView);
         mAdapter = new DynamicAdapter(DataUtil.get(20));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        layoutManager = new LinearLayoutManager(activity);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         // 加了分割线，滚动条才会置顶
@@ -123,30 +126,49 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
 
         DensityUtil.formatHeight(headerBinding.viewHeader, activity.getmHeaderHeight(), 1);
 
-//        bindingView.recyclerView.setOnTouchListener(this);
         bindingView.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
+                super.onScrolled(recyclerView, dx, dy);
                 // dy: 上拉为正，下滑为负
 //                totalDy = Math.abs(totalDy) + dy;
-                totalDy -= dy;
-                if (scrollInterface != null) {
-                    scrollInterface.onScrool(-totalDy);
+                if (mIsVisible) {
+                    totalDy -= dy;
+                    if (scrollInterface != null) {
+                        scrollInterface.onScroll(-totalDy);
+                    }
                 }
             }
         });
 
+        if ("A".equals(mType)) {
+            activity.setListener3(listener);
+        } else if ("ZF".equals(mType)) {
+            activity.setListener2(listener);
+        } else {
+            activity.setListener(listener);
+        }
         mIsFirst = false;
     }
 
-    private OnFragmentScrollInterface scrollInterface;
+    private OnActivityListener listener = new OnActivityListener() {
+        @Override
+        public void onScroll(int y) {
+            Log.e("mType---mIsVisible", "" + mType + "---" + mIsVisible);
+            if (!mIsVisible) {
+                totalDy = -y;
+                layoutManager.scrollToPositionWithOffset(0, -y);
+            }
+        }
+    };
 
-    public OnFragmentScrollInterface getScrollInterface() {
+    private OnFragmentListener scrollInterface;
+
+    public OnFragmentListener getScrollInterface() {
         return scrollInterface;
     }
 
-    public void setScrollInterface(OnFragmentScrollInterface scrollInterface) {
+    public void setScrollListener(OnFragmentListener scrollInterface) {
         this.scrollInterface = scrollInterface;
     }
 
@@ -169,7 +191,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
         if (event.getAction() == MotionEvent.ACTION_UP) {
             Log.i("Lgq", "sssssssll离开了lllll==");
             y2 = event.getY();
-            scrollInterface.onScrool((int) (y2 - y1));
+            scrollInterface.onScroll((int) (y2 - y1));
         }
 //        return super.onTouchEvent(event);
         return false;

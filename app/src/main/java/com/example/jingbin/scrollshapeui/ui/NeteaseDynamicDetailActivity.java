@@ -10,7 +10,8 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.jingbin.scrollshapeui.R;
 import com.example.jingbin.scrollshapeui.databinding.ActivityDynamicDetailBinding;
-import com.example.jingbin.scrollshapeui.impl.OnFragmentScrollInterface;
+import com.example.jingbin.scrollshapeui.impl.OnActivityListener;
+import com.example.jingbin.scrollshapeui.impl.OnFragmentListener;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
 import com.example.jingbin.scrollshapeui.utils.DensityUtil;
 import com.example.jingbin.scrollshapeui.utils.ViewUtil;
@@ -36,6 +37,9 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
     public final static String IMAGE_URL_MEDIUM = "https://img3.doubanio.com/view/subject/m/public/s4477716.jpg";
     private ActivityDynamicDetailBinding binding;
     private int mHeaderHeight;
+    private NeteaseDynamicFragment fragment1;
+    private NeteaseDynamicFragment fragment2;
+    private NeteaseDynamicFragment fragment3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +53,63 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         initFragmentList();
         MyFragmentPagerAdapter myAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragments, mTitleList);
         binding.viewPager.setAdapter(myAdapter);
-        binding.viewPager.setOffscreenPageLimit(1);
-        myAdapter.notifyDataSetChanged();
+        binding.viewPager.setOffscreenPageLimit(2);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+        myAdapter.notifyDataSetChanged();
+        initScrollListener();
+    }
+
+    private void initScrollListener() {
+        final int headerContentHeight = mHeaderHeight - DensityUtil.dip2px(this, 40);
+        Log.e("headerContentHeight", "" + headerContentHeight);
+        fragment1.setScrollListener(new OnFragmentListener() {
+            @Override
+            public void onScroll(int y) {
+                if (y > headerContentHeight) {
+                    y = headerContentHeight;
+                }
+                if (listener2 != null) {
+                    listener2.onScroll(y);
+                }
+                if (listener3 != null) {
+                    listener3.onScroll(y);
+                }
+                Log.e("onScroll", "" + y);
+                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+            }
+        });
+        fragment2.setScrollListener(new OnFragmentListener() {
+            @Override
+            public void onScroll(int y) {
+                if (y > headerContentHeight) {
+                    y = headerContentHeight;
+                }
+                if (listener != null) {
+                    listener.onScroll(y);
+                }
+                if (listener3 != null) {
+                    listener3.onScroll(y);
+                }
+                Log.e("onScroll", "" + y);
+                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+            }
+        });
+        fragment3.setScrollListener(new OnFragmentListener() {
+            @Override
+            public void onScroll(int y) {
+                if (y > headerContentHeight) {
+                    y = headerContentHeight;
+                }
+                if (listener != null) {
+                    listener.onScroll(y);
+                }
+                if (listener2 != null) {
+                    listener2.onScroll(y);
+                }
+                Log.e("onScroll", "" + y);
+                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+            }
+        });
     }
 
     private void initHeaderView() {
@@ -91,45 +149,41 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         mTitleList.add("评论");
         mTitleList.add("转发");
         mTitleList.add("赞");
-        NeteaseDynamicFragment fragment1 = NeteaseDynamicFragment.newInstance("1");
-        NeteaseDynamicFragment fragment2 = NeteaseDynamicFragment.newInstance("2");
-        NeteaseDynamicFragment fragment3 = NeteaseDynamicFragment.newInstance("3");
+        fragment1 = NeteaseDynamicFragment.newInstance("PL");
+        fragment2 = NeteaseDynamicFragment.newInstance("ZF");
+        fragment3 = NeteaseDynamicFragment.newInstance("Z");
         mFragments.add(fragment1);
         mFragments.add(fragment2);
         mFragments.add(fragment3);
-
-        final int headerContentHeight = mHeaderHeight - DensityUtil.dip2px(this, 40);
-        Log.e("headerContentHeight", "" + headerContentHeight);
-        fragment1.setScrollInterface(new OnFragmentScrollInterface() {
-            @Override
-            public void onScrool(int y) {
-                if (y > headerContentHeight) {
-                    y = headerContentHeight;
-                }
-                Log.e("onScrool", "" + y);
-                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
-            }
-        });
-        fragment2.setScrollInterface(new OnFragmentScrollInterface() {
-            @Override
-            public void onScrool(int y) {
-                if (y > headerContentHeight) {
-                    y = headerContentHeight;
-                }
-                Log.e("onScrool", "" + y);
-                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
-            }
-        });
-        fragment3.setScrollInterface(new OnFragmentScrollInterface() {
-            @Override
-            public void onScrool(int y) {
-                if (y > headerContentHeight) {
-                    y = headerContentHeight;
-                }
-                Log.e("onScrool", "" + y);
-                ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
-            }
-        });
     }
 
+    private OnActivityListener listener2;
+
+    public OnActivityListener getListener2() {
+        return listener2;
+    }
+
+    public void setListener2(OnActivityListener listener) {
+        this.listener2 = listener;
+    }
+
+    private OnActivityListener listener3;
+
+    public OnActivityListener getListener3() {
+        return listener3;
+    }
+
+    public void setListener3(OnActivityListener listener) {
+        this.listener3 = listener;
+    }
+
+    private OnActivityListener listener;
+
+    public OnActivityListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnActivityListener listener) {
+        this.listener = listener;
+    }
 }
