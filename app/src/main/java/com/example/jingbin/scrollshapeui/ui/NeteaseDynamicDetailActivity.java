@@ -32,6 +32,7 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
 
     private ArrayList<String> mTitleList = new ArrayList<>(3);
     private ArrayList<Fragment> mFragments = new ArrayList<>(3);
+    private int headerContentHeight ;
 
     public final static String IMAGE_URL_LARGE = "https://img3.doubanio.com/view/subject/l/public/s4477716.jpg";
     public final static String IMAGE_URL_MEDIUM = "https://img3.doubanio.com/view/subject/m/public/s4477716.jpg";
@@ -60,7 +61,7 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
     }
 
     private void initScrollListener() {
-        final int headerContentHeight = mHeaderHeight - DensityUtil.dip2px(this, 40);
+        headerContentHeight = mHeaderHeight - DensityUtil.dip2px(this, 40);
         Log.e("headerContentHeight", "" + headerContentHeight);
         fragment1.setScrollListener(new OnFragmentListener() {
             @Override
@@ -138,6 +139,14 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
 
     public int getmHeaderHeight() {
         return mHeaderHeight;
+    }
+
+    public int getHeaderContentHeight() {
+        return headerContentHeight;
+    }
+
+    public void setHeaderContentHeight(int headerContentHeight) {
+        this.headerContentHeight = headerContentHeight;
     }
 
     public void setmHeaderHeight(int mHeaderHeight) {

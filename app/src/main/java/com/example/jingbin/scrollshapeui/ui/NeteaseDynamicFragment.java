@@ -79,6 +79,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
 
         // 准备就绪
         mIsPrepared = true;
+        Log.e("mType111---mIsVisible", "" + mType + "---" + mIsVisible);
         initAdapter();
     }
 
@@ -87,6 +88,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
         if (!mIsPrepared || !mIsVisible || !mIsFirst) {
             return;
         }
+        Log.e("mType222---mIsVisible", "" + mType + "---" + mIsVisible);
         initAdapter();
     }
 
@@ -141,12 +143,12 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
             }
         });
 
-        if ("A".equals(mType)) {
-            activity.setListener3(listener);
+        if ("PL".equals(mType)) {
+            activity.setListener(listener);
         } else if ("ZF".equals(mType)) {
             activity.setListener2(listener);
         } else {
-            activity.setListener(listener);
+            activity.setListener3(listener);
         }
         mIsFirst = false;
     }
