@@ -3,6 +3,7 @@ package com.example.jingbin.scrollshapeui.ui;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,10 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
 
     private ArrayList<String> mTitleList = new ArrayList<>(3);
     private ArrayList<Fragment> mFragments = new ArrayList<>(3);
-    private int headerContentHeight ;
+    private int headerContentHeight;
+    // 是否已置顶
+    private boolean isTop = false;
+    private boolean isPageScroll = false;
 
     public final static String IMAGE_URL_LARGE = "https://img3.doubanio.com/view/subject/l/public/s4477716.jpg";
     public final static String IMAGE_URL_MEDIUM = "https://img3.doubanio.com/view/subject/m/public/s4477716.jpg";
@@ -66,7 +70,9 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         fragment1.setScrollListener(new OnFragmentListener() {
             @Override
             public void onScroll(int y) {
+                isTop = false;
                 if (y > headerContentHeight) {
+                    isTop = true;
                     y = headerContentHeight;
                 }
                 if (listener2 != null) {
@@ -82,7 +88,9 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         fragment2.setScrollListener(new OnFragmentListener() {
             @Override
             public void onScroll(int y) {
+                isTop = false;
                 if (y > headerContentHeight) {
+                    isTop = true;
                     y = headerContentHeight;
                 }
                 if (listener != null) {
@@ -98,7 +106,9 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         fragment3.setScrollListener(new OnFragmentListener() {
             @Override
             public void onScroll(int y) {
+                isTop = false;
                 if (y > headerContentHeight) {
+                    isTop = true;
                     y = headerContentHeight;
                 }
                 if (listener != null) {
@@ -109,6 +119,23 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
                 }
                 Log.e("onScroll", "" + y);
                 ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+            }
+        });
+        binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+                Log.e("onPageScrolled", "i--" + i + ";i1---" + i1);
+                isPageScroll = true;
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                Log.e("onPageSelected", "--");
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                Log.e("StateChanged", "--");
             }
         });
     }
@@ -194,5 +221,13 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
 
     public void setListener(OnActivityListener listener) {
         this.listener = listener;
+    }
+
+    public boolean isTop() {
+        return isTop;
+    }
+
+    public void setTop(boolean top) {
+        isTop = top;
     }
 }

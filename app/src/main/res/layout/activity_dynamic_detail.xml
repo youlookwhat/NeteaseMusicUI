@@ -41,6 +41,7 @@
                     android:id="@+id/ll_header_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
                     android:orientation="vertical">
 
                     <TextView
@@ -85,6 +86,11 @@
                         android:text="赞" />
 
                 </android.support.design.widget.TabLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#e0e0e0" />
             </LinearLayout>
 
         </RelativeLayout>
