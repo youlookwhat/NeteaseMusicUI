@@ -1,7 +1,6 @@
 package com.example.jingbin.scrollshapeui.ui;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -144,7 +143,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
         });
 
         if ("PL".equals(mType)) {
-            activity.setListener(listener);
+            activity.setListener1(listener);
         } else if ("ZF".equals(mType)) {
             activity.setListener2(listener);
         } else {

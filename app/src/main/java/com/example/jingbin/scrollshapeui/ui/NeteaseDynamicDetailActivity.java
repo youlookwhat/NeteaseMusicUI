@@ -71,16 +71,17 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
             @Override
             public void onScroll(int y) {
                 isTop = false;
+                onScrollY1 = y;
                 if (y > headerContentHeight) {
                     isTop = true;
                     y = headerContentHeight;
                 }
-                if (listener2 != null) {
-                    listener2.onScroll(y);
-                }
-                if (listener3 != null) {
-                    listener3.onScroll(y);
-                }
+//                if (listener2 != null) {
+//                    listener2.onScroll(y);
+//                }
+//                if (listener3 != null) {
+//                    listener3.onScroll(y);
+//                }
                 Log.e("onScroll", "" + y);
                 ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
             }
@@ -89,16 +90,17 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
             @Override
             public void onScroll(int y) {
                 isTop = false;
+                onScrollY2 = y;
                 if (y > headerContentHeight) {
                     isTop = true;
                     y = headerContentHeight;
                 }
-                if (listener != null) {
-                    listener.onScroll(y);
-                }
-                if (listener3 != null) {
-                    listener3.onScroll(y);
-                }
+//                if (listener1 != null) {
+//                    listener1.onScroll(y);
+//                }
+//                if (listener3 != null) {
+//                    listener3.onScroll(y);
+//                }
                 Log.e("onScroll", "" + y);
                 ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
             }
@@ -107,25 +109,100 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
             @Override
             public void onScroll(int y) {
                 isTop = false;
+                onScrollY3 = y;
                 if (y > headerContentHeight) {
                     isTop = true;
                     y = headerContentHeight;
                 }
-                if (listener != null) {
-                    listener.onScroll(y);
-                }
-                if (listener2 != null) {
-                    listener2.onScroll(y);
-                }
+//                if (listener1 != null) {
+//                    listener1.onScroll(y);
+//                }
+//                if (listener2 != null) {
+//                    listener2.onScroll(y);
+//                }
                 Log.e("onScroll", "" + y);
                 ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
             }
         });
+
+        /**从第一个tab滑到第二个tab时，会自动触发第二个tab的onPageScrolled事件，导致第三个tab也会置顶！*/
         binding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 Log.e("onPageScrolled", "i--" + i + ";i1---" + i1);
                 isPageScroll = true;
+                int currentItem = binding.viewPager.getCurrentItem();
+                Log.e("currentItem", "currentItem--" + currentItem);
+
+                if (currentItem == 0) {
+                    if (!isHavedSc) {
+                        if (onScrollY1 < headerContentHeight) {
+                            isHavedSc = true;
+                            int y = onScrollY1;
+                            onScrollY2 = y;
+                            if (listener2 != null) {
+                                listener2.onScroll(y);
+                            }
+                            ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+                        } else {
+                            if (onScrollY2 <= headerContentHeight) {
+                                onScrollY2 = headerContentHeight;
+                                if (listener2 != null) {
+                                    listener2.onScroll(onScrollY2);
+                                }
+                            }
+                        }
+                    }
+                } else if (currentItem == 1) {
+                    if (!isHavedSc && onScrollY2 < headerContentHeight) {
+                        isHavedSc = true;
+                        int y = onScrollY2;
+                        onScrollY1 = y;
+                        onScrollY3 = y;
+                        if (listener1 != null) {
+                            listener1.onScroll(y);
+                        }
+                        if (listener3 != null) {
+                            listener3.onScroll(y);
+                        }
+                        ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+
+                    } else if (!isHavedSc && onScrollY2 >= headerContentHeight) {
+
+                        if (onScrollY1 <= headerContentHeight) {
+                            onScrollY1 = headerContentHeight;
+                            if (listener1 != null) {
+                                listener1.onScroll(onScrollY1);
+                            }
+                        }
+                        if (onScrollY3 <= headerContentHeight) {
+                            onScrollY3 = headerContentHeight;
+                            if (listener3 != null) {
+                                listener3.onScroll(onScrollY3);
+                            }
+                        }
+                    }
+                } else if (currentItem == 2) {
+                    if (!isHavedSc && onScrollY3 < headerContentHeight) {
+                        isHavedSc = true;
+                        int y = onScrollY3;
+                        onScrollY2 = y;
+                        if (listener2 != null) {
+                            listener2.onScroll(y);
+                        }
+                        ViewUtil.setMarginHeight(binding.llHeaderContent, -y);
+
+                    } else if (!isHavedSc && onScrollY3 >= headerContentHeight) {
+
+                        if (onScrollY2 <= headerContentHeight) {
+                            onScrollY2 = headerContentHeight;
+                            if (listener2 != null) {
+                                listener2.onScroll(onScrollY2);
+                            }
+                        }
+                    }
+                }
+
             }
 
             @Override
@@ -135,10 +212,16 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                Log.e("StateChanged", "--");
+                Log.e("StateChanged", "--" + i);
+                isHavedSc = false;
             }
         });
     }
+
+    private boolean isHavedSc = false;
+    private int onScrollY1;
+    private int onScrollY2;
+    private int onScrollY3;
 
     private void initHeaderView() {
         binding.tvDetailContent.setText("我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容");
@@ -213,14 +296,14 @@ public class NeteaseDynamicDetailActivity extends AppCompatActivity {
         this.listener3 = listener;
     }
 
-    private OnActivityListener listener;
+    private OnActivityListener listener1;
 
-    public OnActivityListener getListener() {
-        return listener;
+    public OnActivityListener getListener1() {
+        return listener1;
     }
 
-    public void setListener(OnActivityListener listener) {
-        this.listener = listener;
+    public void setListener1(OnActivityListener listener1) {
+        this.listener1 = listener1;
     }
 
     public boolean isTop() {
