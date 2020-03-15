@@ -27,4 +27,6 @@ public class CommonUtils {
         return getResoure().getDimension(resId);
     }
 
+
+
 }

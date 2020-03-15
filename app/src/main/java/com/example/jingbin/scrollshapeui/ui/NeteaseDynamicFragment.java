@@ -125,7 +125,7 @@ public class NeteaseDynamicFragment extends BaseFragment<FragmentNeteaseDynamicB
             }
         });
 
-        DensityUtil.formatHeight(headerBinding.viewHeader, activity.getmHeaderHeight(), 1);
+        DensityUtil.formatHeight(headerBinding.viewHeader, activity.getmHeaderHeight());
 
         bindingView.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

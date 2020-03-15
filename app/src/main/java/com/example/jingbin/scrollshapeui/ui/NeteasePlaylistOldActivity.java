@@ -7,16 +7,13 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.transition.ArcMotion;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -30,62 +27,55 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.jingbin.scrollshapeui.R;
-import com.example.jingbin.scrollshapeui.bean.DynamicBean;
-import com.example.jingbin.scrollshapeui.databinding.ActivityNeteasePlayBinding;
-import com.example.jingbin.scrollshapeui.databinding.HeaderDynamicBinding;
+import com.example.jingbin.scrollshapeui.adapter.ListAdapter;
+import com.example.jingbin.scrollshapeui.databinding.ActivityNeteasePlayListOldBinding;
 import com.example.jingbin.scrollshapeui.utils.CommonUtils;
 import com.example.jingbin.scrollshapeui.utils.CustomChangeBounds;
-import com.example.jingbin.scrollshapeui.utils.DataUtil;
-import com.example.jingbin.scrollshapeui.utils.DensityUtil;
 import com.example.jingbin.scrollshapeui.utils.StatusBarUtil;
-import com.example.jingbin.scrollshapeui.utils.ViewUtil;
+import com.example.jingbin.scrollshapeui.view.MyNestedScrollView;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
-import me.jingbin.library.ByRecyclerView;
-import me.jingbin.library.adapter.BaseByViewHolder;
-import me.jingbin.library.adapter.BaseRecyclerAdapter;
 
 import static com.example.jingbin.scrollshapeui.utils.StatusBarUtil.getStatusBarHeight;
 
 /**
- * Created by jingbin on 2020/3/15.
- * 使用的是 RV上面覆盖一层布局，然后给RV添加HeaderView，
- * HeaderView目的纯粹是让RV下移[覆盖布局]的高度，然后滑动RV的时候让[覆盖布局]也跟着滑动。
- * PS:
- * 这样处理纯粹是为了使用 转场动画。
- * 因为如果把[覆盖布局]直接作为HeaderView的话，转场动画不生效，不然直接作为HeaderView添加效果最好。
+ * Created by jingbin on 2017/1/9.
+ * 高仿网易云音乐歌单详情页
+ * 实现思路：
+ * 1、Activity设置自定义Shared Element切换动画
+ * 2、透明状态栏（透明Toolbar,使背景图上移）
+ * 3、Toolbar底部增加和背景一样的高斯模糊图，并上移图片（为了使背景图的底部作为Toolbar的背景）
+ * 4、上下滑动，通过NestedScrollView拿到移动的高度，同时调整Toolbar的背景图透明度
  */
-public class NeteasePlaylistActivity extends AppCompatActivity {
+@Deprecated
+public class NeteasePlaylistOldActivity extends AppCompatActivity {
 
     public final static String IMAGE_URL_LARGE = "https://upload-images.jianshu.io/upload_images/1354448-49d5a95614966128.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
     public final static String PARAM = "isRecyclerView";
-    private ActivityNeteasePlayBinding binding;
-    private BaseRecyclerAdapter<DynamicBean> adapter;
-    private boolean isRecyclerView = true;
-    // HeaderView的高度
-    private int headerHeight;
+    private ActivityNeteasePlayListOldBinding binding;
+    // 这个是高斯图背景的高度
+    private int imageBgHeight;
     // 在多大范围内变色
     private int slidingDistance;
+    private boolean isRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_netease_play);
-        // 状态栏透明
-        StatusBarUtil.setTranslucentImageHeader(this, 0, binding.titleToolBar);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_netease_play_list_old);
         isRecyclerView = getIntent().getBooleanExtra(PARAM, true);
-        binding.recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                headerHeight = binding.include.getRoot().getHeight();
 
-                setMotion();
-                setTitleBar();
-                setHeaderPicture();
-                handleTitleLayout();
-                setAdapter();
-            }
-        });
+        setMotion();
+        setTitleBar();
+        setPicture();
+        initSlideShapeTheme();
+
+        // RecyclerView列表显示
+        if (isRecyclerView) {
+            setAdapter();
+        } else {// 显示一般文本
+            setText();
+        }
     }
 
     /**
@@ -112,6 +102,51 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
     }
 
     /**
+     * 高斯背景图和一般图片
+     */
+    private void setPicture() {
+        Glide.with(this)
+                .load(IMAGE_URL_LARGE)
+                .override((int) CommonUtils.getDimens(R.dimen.movie_detail_width), (int) CommonUtils.getDimens(R.dimen.movie_detail_height))
+                .into(binding.include.ivOnePhoto);
+
+        // "14":模糊度；"3":图片缩放3倍后再进行模糊
+        Glide.with(this)
+                .load(IMAGE_URL_LARGE)
+                .error(R.drawable.stackblur_default)
+                .placeholder(R.drawable.stackblur_default)
+                .transition(DrawableTransitionOptions.withCrossFade(500))
+                .transform(new BlurTransformation(40, 8))// 设置高斯模糊
+                .into(binding.include.imgItemBg);
+    }
+
+    /**
+     * 显示文本
+     */
+    private void setText() {
+        binding.tvTxt.setText(CommonUtils.getString(R.string.string_intr));
+        binding.tvTxt.setVisibility(View.VISIBLE);
+        binding.xrvList.setVisibility(View.GONE);
+    }
+
+    /**
+     * 设置RecyclerView
+     */
+    private void setAdapter() {
+        binding.tvTxt.setVisibility(View.GONE);
+        binding.xrvList.setVisibility(View.VISIBLE);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        binding.xrvList.setLayoutManager(mLayoutManager);
+        // 需加，不然滑动不流畅
+        binding.xrvList.setNestedScrollingEnabled(false);
+        binding.xrvList.setHasFixedSize(false);
+        final ListAdapter adapter = new ListAdapter(this);
+        adapter.notifyDataSetChanged();
+        binding.xrvList.setAdapter(adapter);
+    }
+
+    /**
      * toolbar设置
      */
     private void setTitleBar() {
@@ -132,33 +167,11 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 高斯背景图和一般图片
-     */
-    private void setHeaderPicture() {
-        Glide.with(this)
-                .load(IMAGE_URL_LARGE)
-                .override((int) CommonUtils.getDimens(R.dimen.movie_detail_width), (int) CommonUtils.getDimens(R.dimen.movie_detail_height))
-                .into(binding.include.ivOnePhoto);
-
-        DensityUtil.formatHeight(binding.include.imgItemBg, headerHeight);
-        // "14":模糊度；"3":图片缩放3倍后再进行模糊
-        Glide.with(this)
-                .load(IMAGE_URL_LARGE)
-                .error(R.drawable.stackblur_default)
-                .placeholder(R.drawable.stackblur_default)
-                .transition(DrawableTransitionOptions.withCrossFade(500))
-                // 设置高斯模糊
-                .transform(new BlurTransformation(40, 8))
-                .into(binding.include.imgItemBg);
-    }
 
     /**
-     * 处理TitleBar布局
+     * 初始化滑动渐变
      */
-    private void handleTitleLayout() {
-        // 标题栏高斯背景高度
-        DensityUtil.formatHeight(binding.ivTitleHeadBg, headerHeight);
+    private void initSlideShapeTheme() {
         setImgHeaderBg();
 
         // toolbar的高度
@@ -174,20 +187,26 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         ivTitleHeadBgParams.setMargins(0, -marginTop, 0, 0);
         binding.ivTitleHeadBg.setImageAlpha(0);
 
-        int height58 = DensityUtil.dip2px(this, 58);
-        int height10 = DensityUtil.dip2px(this, 10);
-        int titleBarAndStatusHeight = (height58 + getStatusBarHeight(this));
-        slidingDistance = headerHeight - titleBarAndStatusHeight - height10;
+        // 为头部是View的界面设置状态栏透明
+        StatusBarUtil.setTranslucentImageHeader(this, 0, binding.titleToolBar);
+
+        ViewGroup.LayoutParams imgItemBgparams = binding.include.imgItemBg.getLayoutParams();
+        // 获得高斯图背景的高度
+        imageBgHeight = imgItemBgparams.height;
+
+        // 监听改变透明度
+        initScrollViewListener();
     }
 
+
     /**
-     * TitleBar高斯背景模糊图，成功后背景设为透明
+     * 加载titlebar背景,加载后将背景设为透明
      */
     private void setImgHeaderBg() {
-        Glide.with(this)
-                .load(NeteasePlaylistActivity.IMAGE_URL_LARGE)
+        Glide.with(this).load(NeteasePlaylistOldActivity.IMAGE_URL_LARGE)
+//                .placeholder(R.drawable.stackblur_default)
                 .error(R.drawable.stackblur_default)
-                .transform(new BlurTransformation(40, 8))
+                .transform(new BlurTransformation(40, 8))// 设置高斯模糊
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -204,67 +223,34 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                 }).into(binding.ivTitleHeadBg);
     }
 
-    /**
-     * 设置RecyclerView
-     */
-    private void setAdapter() {
-        HeaderDynamicBinding headerBinding = DataBindingUtil.inflate(LayoutInflater.from(this), R.layout.header_dynamic, (ViewGroup) binding.recyclerView.getParent(), false);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        binding.recyclerView.setLayoutManager(mLayoutManager);
-        adapter = new BaseRecyclerAdapter<DynamicBean>(R.layout.item_list) {
+    private void initScrollViewListener() {
+        // 为了兼容api23以下
+        binding.nsvScrollview.setOnMyScrollChangeListener(new MyNestedScrollView.ScrollInterface() {
             @Override
-            protected void bindView(BaseByViewHolder<DynamicBean> holder, DynamicBean bean, int position) {
-                holder.setText(R.id.tv_text, !isRecyclerView ? bean.getContent() : position + "、" + bean.getContent());
-            }
-        };
-        binding.recyclerView.setAdapter(adapter);
-        DensityUtil.formatHeight(headerBinding.viewHeader, headerHeight);
-        binding.recyclerView.addHeaderView(headerBinding.getRoot());
-
-        if (isRecyclerView) {
-            adapter.setNewData(DataUtil.get(20));
-            binding.recyclerView.setOnLoadMoreListener(new ByRecyclerView.OnLoadMoreListener() {
-                @Override
-                public void onLoadMore() {
-                    if (adapter.getData().size() == 40) {
-                        binding.recyclerView.loadMoreEnd();
-                    } else {
-                        adapter.addData(DataUtil.get(20));
-                        binding.recyclerView.loadMoreComplete();
-                    }
-                }
-            }, 1000);
-        } else {
-            adapter.setNewData(DataUtil.getContent());
-        }
-
-        // 监听改变透明度
-        binding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            private int totalDy;
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                // dy: 上拉为正，下滑为负
-                totalDy -= dy;
-                ViewUtil.setMarginHeight(binding.include.getRoot(), totalDy);
-                scrollChangeHeader(-totalDy);
+            public void onScrollChange(int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                scrollChangeHeader(scrollY);
             }
         });
+
+        int titleBarAndStatusHeight = (int) (CommonUtils.getDimens(R.dimen.nav_bar_height) + getStatusBarHeight(this));
+        slidingDistance = imageBgHeight - titleBarAndStatusHeight - (int) (CommonUtils.getDimens(R.dimen.nav_bar_height_more));
     }
 
     /**
      * 根据页面滑动距离改变Header透明度方法
      */
     private void scrollChangeHeader(int scrolledY) {
-//        Log.e("---scrolledY:  ", scrolledY + "");
-//        Log.e("-----slidingDistance: ", slidingDistance + "");
+
+//        DebugUtil.error("---scrolledY:  " + scrolledY);
+//        DebugUtil.error("-----slidingDistance: " + slidingDistance);
+
         if (scrolledY < 0) {
             scrolledY = 0;
         }
         float alpha = Math.abs(scrolledY) * 1.0f / (slidingDistance);
         Drawable drawable = binding.ivTitleHeadBg.getDrawable();
+//        DebugUtil.error("----alpha:  " + alpha);
+
         if (drawable != null) {
             if (scrolledY <= slidingDistance) {
                 // title部分的渐变
@@ -277,13 +263,22 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
         }
     }
 
-    public static void start(Activity context, ImageView imageView, boolean isRV) {
-        Intent intent = new Intent(context, NeteasePlaylistActivity.class);
-        intent.putExtra(PARAM, isRV);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.xrvList.setFocusable(false);
+    }
+
+    /**
+     * @param context        activity
+     * @param imageView      imageView
+     * @param isRecyclerView 是否为列表
+     */
+    public static void start(Activity context, ImageView imageView, boolean isRecyclerView) {
+        Intent intent = new Intent(context, NeteasePlaylistOldActivity.class);
+        intent.putExtra(PARAM, isRecyclerView);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                imageView,
-                //与xml文件对应
-                CommonUtils.getString(R.string.transition_book_img));
+                imageView, CommonUtils.getString(R.string.transition_book_img));//与xml文件对应
         ActivityCompat.startActivity(context, intent, options.toBundle());
     }
 }

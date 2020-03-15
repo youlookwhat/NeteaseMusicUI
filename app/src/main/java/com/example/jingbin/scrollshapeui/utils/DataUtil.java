@@ -1,5 +1,6 @@
 package com.example.jingbin.scrollshapeui.utils;
 
+import com.example.jingbin.scrollshapeui.R;
 import com.example.jingbin.scrollshapeui.bean.DynamicBean;
 
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ public class DataUtil {
             bean.setContent("数据展示");
             list.add(bean);
         }
+        return list;
+    }
+
+    public static ArrayList<DynamicBean> getContent() {
+        ArrayList<DynamicBean> list = new ArrayList<>();
+        DynamicBean bean = new DynamicBean();
+        bean.setContent(CommonUtils.getString(R.string.string_intr));
+        list.add(bean);
         return list;
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.jingbin.scrollshapeui">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +16,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.example.jingbin.scrollshapeui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +27,15 @@
         </activity>
 
         <activity
-            android:name=".ui.NeteasePlaylistActivity"
+            android:name=".ui.NeteasePlaylistOldActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyScrollPage" />
         <activity
             android:name=".ui.NeteaseDynamicDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/MyScrollPage" />
+        <activity
+            android:name=".ui.NeteasePlaylistActivity"
             android:theme="@style/MyScrollPage" />
     </application>
 

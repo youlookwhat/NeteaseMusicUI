@@ -35,14 +35,6 @@ public class MainActivity extends AppCompatActivity {
                 .override((int) CommonUtils.getDimens(R.dimen.movie_detail_width), (int) CommonUtils.getDimens(R.dimen.movie_detail_height))
                 .into(binding.ivSongList);
 
-        // RecyclerView列表显示
-        binding.tvRecyclerview.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View view) {
-                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
-            }
-        });
         // 一般文本显示
         binding.tvTxtShow.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -51,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
             }
         });
+        // RecyclerView
+        binding.tvRecyclerview.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
+            }
+        });
+
         binding.tvSongList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

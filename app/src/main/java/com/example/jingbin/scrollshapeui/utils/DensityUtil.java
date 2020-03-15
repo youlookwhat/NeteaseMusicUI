@@ -125,17 +125,9 @@ public class DensityUtil {
         }
     }
 
-    public static void formatHeight(View view, int height, int type) {
-        if (type == 1) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
-            view.setLayoutParams(lp);
-        } else if (type == 2) {
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
-            view.setLayoutParams(lp);
-        } else {
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
-            view.setLayoutParams(lp);
-        }
+    public static void formatHeight(View view, int height) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = height;
     }
 
 

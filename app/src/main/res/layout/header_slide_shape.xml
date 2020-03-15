@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:background="@color/colorPrimary">
 
         <ImageView
             android:id="@+id/img_item_bg"
             android:layout_width="match_parent"
-            android:layout_height="290dp"
+            android:layout_height="310dp"
             android:scaleType="fitXY" />
 
         <LinearLayout
@@ -19,9 +21,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
             android:paddingLeft="20dp"
-            android:paddingTop="95dp">
+            android:paddingTop="95dp"
+            android:paddingBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +36,8 @@
                     android:layout_height="@dimen/movie_detail_height"
                     android:layout_marginRight="15dp"
                     android:scaleType="fitXY"
-                    android:transitionName="@string/transition_book_img" />
+                    android:transitionName="@string/transition_book_img"
+                    tools:background="@color/tabBackground" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,8 +49,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -101,8 +104,8 @@
                         android:id="@+id/tv_one_genres"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
                         android:ellipsize="end"
                         android:text="首版时间：2010年7月6日"
                         android:textColor="@color/colorWhite" />
@@ -111,8 +114,8 @@
                         android:id="@+id/tv_one_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
                         android:ellipsize="end"
                         android:text="字    数：210000"
                         android:textColor="@color/colorWhite" />
@@ -121,8 +124,8 @@
                         android:id="@+id/tv_one_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
                         android:ellipsize="end"
                         android:lines="2"
                         android:text="人物介绍：娜娜、丁丁哥哥、10号、刘茵茵等"
