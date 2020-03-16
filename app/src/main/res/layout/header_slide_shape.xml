@@ -11,7 +11,7 @@
         <ImageView
             android:id="@+id/img_item_bg"
             android:layout_width="match_parent"
-            android:layout_height="310dp"
+            android:layout_height="@dimen/header_height"
             android:scaleType="fitXY" />
 
         <LinearLayout
@@ -35,7 +35,7 @@
                     android:layout_width="@dimen/movie_detail_width"
                     android:layout_height="@dimen/movie_detail_height"
                     android:layout_marginRight="15dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:transitionName="@string/transition_book_img"
                     tools:background="@color/tabBackground" />
 

@@ -60,7 +60,7 @@
             <ImageView
                 android:id="@+id/iv_title_head_bg"
                 android:layout_width="match_parent"
-                android:layout_height="310dp"
+                android:layout_height="@dimen/header_height"
                 android:scaleType="fitXY"
                 android:visibility="gone" />
 
