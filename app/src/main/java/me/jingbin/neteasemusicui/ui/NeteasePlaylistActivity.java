@@ -29,6 +29,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+
 import me.jingbin.neteasemusicui.databinding.ActivityNeteasePlayBinding;
 import me.jingbin.neteasemusicui.databinding.HeaderDynamicBinding;
 
@@ -84,7 +85,7 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                 setTitleBar();
                 setHeaderPicture();
                 handleTitleLayout();
-                setAdapter();
+                setData();
             }
         });
     }
@@ -203,6 +204,15 @@ public class NeteasePlaylistActivity extends AppCompatActivity {
                         return false;
                     }
                 }).into(binding.ivTitleHeadBg);
+    }
+
+    private void setData() {
+        binding.recyclerView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setAdapter();
+            }
+        }, 600);
     }
 
     /**

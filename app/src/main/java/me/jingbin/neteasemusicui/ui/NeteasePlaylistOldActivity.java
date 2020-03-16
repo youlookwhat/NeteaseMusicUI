@@ -58,13 +58,12 @@ public class NeteasePlaylistOldActivity extends AppCompatActivity {
     private int imageBgHeight;
     // 在多大范围内变色
     private int slidingDistance;
-    private boolean isRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_netease_play_list_old);
-        isRecyclerView = getIntent().getBooleanExtra(PARAM, true);
+        boolean isRecyclerView = getIntent().getBooleanExtra(PARAM, true);
 
         setMotion();
         setTitleBar();
