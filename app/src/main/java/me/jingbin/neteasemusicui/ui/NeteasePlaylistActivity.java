@@ -51,6 +51,7 @@ import static me.jingbin.neteasemusicui.utils.StatusBarUtil.getStatusBarHeight;
 
 /**
  * Created by jingbin on 2020/3/15.
+ * 仿网易云音乐歌单详情页：
  * 使用的是 RV上面覆盖一层布局，然后给RV添加HeaderView，
  * HeaderView目的纯粹是让RV下移[覆盖布局]的高度，然后滑动RV的时候让[覆盖布局]也跟着滑动。
  * PS:

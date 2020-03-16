@@ -4,10 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <!--<dimen name="movie_detail_width">125dp</dimen>-->
-    <dimen name="movie_detail_width">140dp</dimen>
-    <!--<dimen name="movie_detail_height">165dp</dimen>-->
-    <dimen name="movie_detail_height">180dp</dimen>
+    <dimen name="movie_detail_width">125dp</dimen>
+    <dimen name="movie_detail_height">165dp</dimen>
     <dimen name="nav_bar_height">58dp</dimen>
     <dimen name="nav_bar_height_more">30dp</dimen>
     <dimen name="height_image">100dp</dimen>
