@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.jingbin.scrollshapeui.view.MyNestedScrollView
+        <me.jingbin.neteasemusicui.view.MyNestedScrollView
             android:id="@+id/nsv_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,7 +48,7 @@
 
             </LinearLayout>
 
-        </com.example.jingbin.scrollshapeui.view.MyNestedScrollView>
+        </me.jingbin.neteasemusicui.view.MyNestedScrollView>
 
 
         <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"

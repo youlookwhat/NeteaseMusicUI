@@ -23,7 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="100dp"
             android:background="@color/colorPageBg"
             android:gravity="center_vertical"
             android:paddingRight="10dp">
@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/tv_txt_show"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_toStartOf="@+id/iv_song_list"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/tv_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 android:layout_below="@+id/tv_txt_show"
                 android:layout_toStartOf="@+id/iv_song_list"
                 android:background="?attr/selectableItemBackground"
@@ -49,8 +49,8 @@
 
             <ImageView
                 android:id="@+id/iv_song_list"
-                android:layout_width="120dp"
-                android:layout_height="160dp"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:background="@color/tabBackground"
