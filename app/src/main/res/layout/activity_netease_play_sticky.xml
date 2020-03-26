@@ -1,0 +1,47 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <me.jingbin.library.ByRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/header_slide_sticky" />
+
+        <RelativeLayout
+            android:id="@+id/rl_title_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent">
+
+            <ImageView
+                android:id="@+id/iv_title_head_bg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/header_height_sticky"
+                android:scaleType="fitXY"
+                android:visibility="visible" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/title_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="@color/colorTransparent"
+                app:contentInsetStartWithNavigation="0dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ToolbarStyle"
+                tools:title="1988：我想和这个世界谈谈">
+
+            </android.support.v7.widget.Toolbar>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</layout>

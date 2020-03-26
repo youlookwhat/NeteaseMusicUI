@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height_sticky"
+        tools:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/img_item_bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height_sticky"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/ll_one_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="95dp"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_one_photo"
+                    android:layout_width="@dimen/movie_detail_width"
+                    android:layout_height="@dimen/movie_detail_height"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="centerCrop"
+                    android:transitionName="@string/transition_book_img"
+                    tools:background="@color/tabBackground" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="43dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="作者："
+                                android:textColor="@color/colorWhite" />
+
+                            <View
+                                android:layout_width="28dp"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="2dp"
+                                android:background="@color/colorTheme" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_one_directors"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:text="韩寒"
+                            android:textColor="@color/colorWhite" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="文学体裁："
+                            android:textColor="@color/colorWhite" />
+
+                        <TextView
+                            android:id="@+id/tv_one_casts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:text="长篇小说"
+                            android:textColor="@color/colorWhite" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_one_genres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:text="首版时间：2010年7月6日"
+                        android:textColor="@color/colorWhite" />
+
+                    <TextView
+                        android:id="@+id/tv_one_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:text="字    数：210000"
+                        android:textColor="@color/colorWhite" />
+
+                    <TextView
+                        android:id="@+id/tv_one_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:text="人物介绍：娜娜、丁丁哥哥、10号、刘茵茵等"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="#33000000"
+            android:gravity="center"
+            android:text="播放全部" />
+    </RelativeLayout>
+</layout>

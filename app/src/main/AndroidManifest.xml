@@ -35,6 +35,9 @@
         <activity
             android:name=".ui.NeteasePlaylistActivity"
             android:theme="@style/MyScrollPage" />
+        <activity
+            android:name=".ui.NeteasePlaylistStickyActivity"
+            android:theme="@style/MyScrollPage" />
     </application>
 
 </manifest>

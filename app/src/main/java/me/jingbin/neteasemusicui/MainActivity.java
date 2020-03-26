@@ -10,10 +10,11 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import me.jingbin.neteasemusicui.databinding.ActivityMainBinding;
 
+import me.jingbin.neteasemusicui.databinding.ActivityMainBinding;
 import me.jingbin.neteasemusicui.ui.NeteaseDynamicDetailActivity;
 import me.jingbin.neteasemusicui.ui.NeteasePlaylistActivity;
+import me.jingbin.neteasemusicui.ui.NeteasePlaylistStickyActivity;
 import me.jingbin.neteasemusicui.utils.CommonUtils;
 
 /**
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
+                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
+//                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, false);
             }
         });
         // RecyclerView
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                NeteasePlaylistActivity.start(MainActivity.this, binding.ivSongList, true);
+                NeteasePlaylistStickyActivity.start(MainActivity.this, binding.ivSongList, true);
             }
         });
 

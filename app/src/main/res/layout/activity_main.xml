@@ -35,7 +35,7 @@
                 android:layout_toStartOf="@+id/iv_song_list"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
-                android:text="一般文本显示" />
+                android:text="旧版本歌单详情页" />
 
             <TextView
                 android:id="@+id/tv_recyclerview"
@@ -45,7 +45,7 @@
                 android:layout_toStartOf="@+id/iv_song_list"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
-                android:text="RecyclerView" />
+                android:text="新版本歌单详情页" />
 
             <ImageView
                 android:id="@+id/iv_song_list"
